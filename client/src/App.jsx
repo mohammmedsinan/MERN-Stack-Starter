@@ -1,10 +1,16 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
+import { useEffect } from 'react'
 
 function App() {
   const [count, setCount] = useState(0)
-
+  const [data, setData] = useState(0)
+  useEffect(() => {
+    fetch('http://localhost:5000/test')
+      .then((response) => response.json())
+      .then((data) => setData(data));
+  }, [])
   return (
     <div className="App">
       <div>
@@ -15,7 +21,7 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1>{data?.m} + {data?.e} + {data?.r} + {data?.n}</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
