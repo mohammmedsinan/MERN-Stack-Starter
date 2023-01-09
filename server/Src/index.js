@@ -9,7 +9,11 @@ const PORT = 5000;
 const MONGO_URI = 'mongodb://0.0.0.0:27017/test';
 
 app.get('/', (req, res) => {
-  res.status(201).send('<h1 style="text-align:center">My First Api</h1>');
+  res.status(202).send('<h1 style="text-align:center">My First Api</h1>');
+});
+
+app.get('/test', (req, res) => {
+  res.status(202).json({ m: 'MongoDB', e: 'express', r: 'React', n: 'Nodejs' });
 });
 
 mongoose.set('strictQuery', true);
