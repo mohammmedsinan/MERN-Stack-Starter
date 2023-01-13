@@ -21,6 +21,21 @@ export const createPost = async (req, res) => {
 //Get All the posts
 export const getAllPosts = async (req, res) => {};
 //Update post
-export const updatePost = async (req, res) => {};
+export const updatePost = async (req, res) => {
+  const id = req.params.id;
+  const data = req.body;
+  try {
+    const post = await Post.findOneAndUpdate({ _id: id }, { ...data });
+    await post.save((err) => {
+      if (err) res.json(err);
+      res.json(data);
+    });
+  } catch (err) {
+    res.status(401).json({
+      message: 'failed update post',
+      err,
+    });
+  }
+};
 //delete post
 export const deletePost = async (req, res) => {};
