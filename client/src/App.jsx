@@ -1,38 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
-import { useEffect } from 'react'
+import React from 'react'
 
 function App() {
-  const [count, setCount] = useState(0)
-  const [data, setData] = useState(0)
-  useEffect(() => {
-    fetch('http://localhost:5000/test')
-      .then((response) => response.json())
-      .then((data) => setData(data));
+  const [data, setData] = React.useState([]);
+  const [text, setText] = React.useState("");
+  React.useEffect(() => {
+    fetch("http://localhost:5000/post/get", { method: "post" }).then(Data => Data.json()).then(Data => setData(Data.data))
+    console.log(data)
   }, [])
   return (
-    <div className="App">
+    <div>
+      <form onSubmit={e => {
+        e.preventDefault()
+        fetch(`http://localhost:5000/post/create`, {
+          method: 'POST', // or 'PUT'
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ text }),
+        })
+      }}
+      >
+        <input onChange={e => setText(e.target.value)} style={{ margin: "auto", display: "block", width: "300px", height: "40px" }} />
+      </form>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        {data.map(post => {
+          return (
+            <div style={{ display: "flex", justifyContent: "space-evenly", marginTop: "120px" }}>
+              <h2>{post.text}</h2>
+              <button>Edit</button>
+              <button >delete</button>
+            </div>
+          )
+        })}
       </div>
-      <h1>{data?.m} + {data?.e} + {data?.r} + {data?.n}</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </div>
   )
 }
