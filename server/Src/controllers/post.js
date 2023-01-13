@@ -19,7 +19,30 @@ export const createPost = async (req, res) => {
   }
 };
 //Get All the posts
-export const getAllPosts = async (req, res) => {};
+export const getAllPosts = async (req, res) => {
+  const BodyReq = req.body.name;
+  try {
+    //search if the user didn't send any filter
+    if (BodyReq === undefined) {
+      //return all the posts
+      await Post.find({}).then((post) => {
+        res.status(201).json({
+          message: 'Get all posts work successfully',
+          data: post,
+          total: post.length,
+        });
+      });
+    } else {
+      //return posts by the filter that sent from front-end
+      console.log(BodyReq);
+    }
+  } catch (err) {
+    res.status(401).json({
+      message: "Get post didn't work, something went wrong",
+      err: err,
+    });
+  }
+};
 //Update post
 export const updatePost = async (req, res) => {
   const id = req.params.id;
