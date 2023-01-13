@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 //   res.status(202).json({ m: 'MongoDB', e: 'express', r: 'React', n: 'Nodejs' });
 // });
 
-app.use('/post');
+app.use('/post', Post);
 
 mongoose.set('strictQuery', true);
 mongoose.connect(
