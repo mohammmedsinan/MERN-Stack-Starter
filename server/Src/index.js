@@ -1,7 +1,7 @@
 import cors from 'cors';
 import express from 'express';
 import mongoose from 'mongoose';
-
+import Post from './routes/post.js';
 const app = express();
 app.use(cors());
 
@@ -12,9 +12,11 @@ app.get('/', (req, res) => {
   res.status(202).send('<h1 style="text-align:center">My First Api</h1>');
 });
 
-app.get('/test', (req, res) => {
-  res.status(202).json({ m: 'MongoDB', e: 'express', r: 'React', n: 'Nodejs' });
-});
+// app.get('/test', (req, res) => {
+//   res.status(202).json({ m: 'MongoDB', e: 'express', r: 'React', n: 'Nodejs' });
+// });
+
+app.use('/post');
 
 mongoose.set('strictQuery', true);
 mongoose.connect(
