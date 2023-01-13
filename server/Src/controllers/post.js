@@ -61,4 +61,19 @@ export const updatePost = async (req, res) => {
   }
 };
 //delete post
-export const deletePost = async (req, res) => {};
+export const deletePost = async (req, res) => {
+  const id = req.params.id;
+  try {
+    await Post.deleteOne({ _id: id }).then((e) => {
+      res.status(201).json({
+        message: 'deleted this post successfully',
+        data: e,
+      });
+    });
+  } catch (err) {
+    res.status(404).json({
+      message: "This id isn't found there sorry!",
+      ErrorData: err,
+    });
+  }
+};
